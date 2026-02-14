@@ -3,6 +3,7 @@ local addonName, addon = ...
 local EP = E.Libs.EP
 local AceAddon = E.Libs.AceAddon
 local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
+local S = E:GetModule("Skins")
 
 local W, F, E, L = unpack(WindTools) ---@type WindTools, Functions, ElvUI, LocaleTable
 local ET = E:GetModule("Tooltip")
@@ -215,6 +216,7 @@ local function AddMythicInfo(self, tooltip, player)
 	MTTip:Show()
 end
 
+
 local frame = CreateFrame("Frame", "MTT", PVEFrame, UIParent)
       frame:SetSize(100, 100)
       frame:SetPoint("TOPRIGHT", PVEFrame, "TOPRIGHT", 100, 0) -- Position
@@ -225,10 +227,22 @@ local frame = CreateFrame("Frame", "MTT", PVEFrame, UIParent)
       frame:RegisterEvent("MYTHIC_PLUS_CURRENT_AFFIX_UPDATE")
       frame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
       frame:RegisterEvent("LFG_LOCK_INFO_RECEIVED")
-	
-	
+        
+		
 local MTTip = CreateFrame("GameTooltip", "MTTip", MTT, "GameTooltipTemplate") 
-      MTTip:Hide()
+      --MTTip:Hide()
+
+local function LoadSkin()
+      
+	  if MTTip and not MTTip.skined then
+	  MTTip:StripTextures()
+	  MTTip:SetTemplate("Transparent")
+	  MTTip.skined = true
+	  end
+end
+
+S:AddCallback("MTTipp_Skin", LoadSkin)
+
 	  	  
 local function hideFrame(self)
 	frame:Hide()
